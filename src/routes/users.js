@@ -25,7 +25,7 @@ app.get('/users', function (req, res) {
         });
       }
 
-      User.count({ status: true }, (err, count) => {
+      User.countDocuments({ status: true }, (err, count) => {
         res.json({
           status: true,
           total: count,
@@ -94,7 +94,7 @@ app.delete('/users/:id', function (req, res) {
   };
 
   // Borrado Lógico
-  User.findByIdAndUpdate(id, changeStatus, {new: true}, (err, instance) => {
+  User.findByIdAndUpdate(id, changeStatus, { new: true }, (err, instance) => {
 
     if (err) {
       return res.status(400).json({

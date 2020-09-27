@@ -18,11 +18,18 @@ app.use(require('./routes/users'));
 
 
 
-mongoose.connect('mongodb+srv://node_user:koCdjlm8dEeTi5FX@testing.uuqkz.mongodb.net/db_rest_node?retryWrites=true&w=majority', {
+mongoose.connect(process.env.urlDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
+}, (err, res) => {
+
+  if (err) {
+    throw err;
+  }
+
+  console.log('Database Online...');
 });
 
 app.listen(process.env.PORT, () => {
