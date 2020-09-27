@@ -18,7 +18,7 @@ app.use(require('./routes/users'));
 
 
 
-mongoose.connect(process.env.urlDB, {
+mongoose.connect('mongodb+srv://node_user:koCdjlm8dEeTi5FX@testing.uuqkz.mongodb.net/db_rest_node?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
