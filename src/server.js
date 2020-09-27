@@ -7,15 +7,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 
-// parse application/x-www-form-urlencoded
+// Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
+// Parse application/json
 app.use(bodyParser.json());
 
-// Users routes
-app.use(require('./routes/users'));
-
+// Globals routes
+app.use(require('./routes/routes'));
 
 
 mongoose.connect(process.env.urlDB, {

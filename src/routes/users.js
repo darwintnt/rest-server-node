@@ -5,10 +5,11 @@ const _ = require('underscore');
 
 // Model
 const User = require('../models/users');
+const { tokenVerify, verifyAdminRole } = require('../middlewares/auth');
 
 
 // Routes
-app.get('/users', function (req, res) {
+app.get('/users', tokenVerify, function (req, res) {
 
   let from = req.query.from || 0;
   let to = req.query.to || 10;
@@ -37,7 +38,7 @@ app.get('/users', function (req, res) {
 
 });
 
-app.post('/users', function (req, res) {
+app.post('/users', [tokenVerify, verifyAdminRole], function (req, res) {
 
   let body = req.body;
 
@@ -63,7 +64,7 @@ app.post('/users', function (req, res) {
 
 });
 
-app.put('/users/:id', function (req, res) {
+app.put('/users/:id', [tokenVerify, verifyAdminRole], function (req, res) {
   let id = req.params.id;
   let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'status']);
 
@@ -85,7 +86,7 @@ app.put('/users/:id', function (req, res) {
 
 });
 
-app.delete('/users/:id', function (req, res) {
+app.delete('/users/:id', [tokenVerify, verifyAdminRole], function (req, res) {
 
   let id = req.params.id;
 
@@ -94,7 +95,7 @@ app.delete('/users/:id', function (req, res) {
   };
 
   // Borrado Lógico
-  User.findByIdAndUpdate(id, changeStatus, { new: true }, (err, instance) => {
+  User.findByIdAndUpdate(id, changeStatus, { new: false }, (err, instance) => {
 
     if (err) {
       return res.status(400).json({
@@ -114,7 +115,7 @@ app.delete('/users/:id', function (req, res) {
 
     res.json({
       status: true,
-      message: instance
+      message: 'User delete',
     });
 
   });
