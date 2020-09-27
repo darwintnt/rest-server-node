@@ -1,7 +1,11 @@
 require('./config/config');
+
+
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -9,26 +13,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-// Routes
-app.get('/users', function (req, res) {
-  res.json('get users');
-});
+// Users routes
+app.use(require('./routes/users'));
 
-app.post('/users', function (req, res) {
-  let body = req.body;
-  res.json({
-    user: body
-  });
-});
 
-app.put('/users/:id', function (req, res) {
-  let id = req.params.id;
-  res.json(`put users ${id}`);
-});
 
-app.delete('/users/:id', function (req, res) {
-  let id = req.params.id;
-  res.json(`delete users ${id}`);
+mongoose.connect('mongodb+srv://node_user:koCdjlm8dEeTi5FX@testing.uuqkz.mongodb.net/db_rest_node?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
 });
 
 app.listen(process.env.PORT, () => {
