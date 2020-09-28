@@ -8,12 +8,12 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
-  urlDB = 'mongodb+srv://node_user:koCdjlm8dEeTi5FX@testing.uuqkz.mongodb.net/db_rest_node?retryWrites=true&w=majority';
+  urlDB = process.env.DB_HOST;
 } else {
-  urlDB = process.env.MONGO_URI;
+  urlDB = process.env.DB_HOST;
 }
 
-process.env.urlDB = urlDB;
+process.env.DB_HOST = urlDB;
 
 // Auth
 process.env.SEED = process.env.SEED || 'secret';
