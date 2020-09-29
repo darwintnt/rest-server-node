@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 // Model
-const User = require('../models/users');
+const User = require('../models/User');
 const { tokenVerify, verifyAdminRole } = require('../middlewares/auth');
 
 
@@ -49,13 +49,20 @@ app.post('/users', [tokenVerify, verifyAdminRole], function (req, res) {
   user.save((err, userDB) => {
 
     if (err) {
+      return res.status(500).json({
+        status: false,
+        message: err
+      });
+    }
+
+    if (!userDB) {
       return res.status(400).json({
         status: false,
         message: err
       });
     }
 
-    res.json({
+    res.status(201).json({
       status: true,
       message: user
     });
@@ -71,6 +78,13 @@ app.put('/users/:id', [tokenVerify, verifyAdminRole], function (req, res) {
   User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, instance) => {
 
     if (err) {
+      return res.status(500).json({
+        status: false,
+        message: err
+      });
+    }
+
+    if (!instance) {
       return res.status(400).json({
         status: false,
         message: err
