@@ -38,6 +38,33 @@ app.get('/products', tokenVerify, function (req, res) {
 
 });
 
+app.get('/products/search/:search', function(req, res) {
+
+  let search = req.params.search;
+
+  let regex = new RegExp(search, 'i');
+
+  Product.find({ name: regex, status: true })
+  .populate('category_id')
+  .exec( (err, products) => {
+
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: err
+      });
+    }
+
+    return res.json({
+      status: true,
+      message: products
+    });
+
+  });
+
+});
+
+
 app.post('/products', [tokenVerify, verifyAdminRole], function (req, res) {
 
   let body = req.body;
