@@ -30,6 +30,10 @@ const productSchema = new Schema({
     ref: 'User',
     required: [true, 'El ID de usuario es obligatorio']
   },
+  img: {
+    type: String,
+    required: false
+  },
   status: {
     type: Boolean,
     default: true

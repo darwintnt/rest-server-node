@@ -64,7 +64,6 @@ app.get('/products/search/:search', function(req, res) {
 
 });
 
-
 app.post('/products', [tokenVerify, verifyAdminRole], function (req, res) {
 
   let body = req.body;

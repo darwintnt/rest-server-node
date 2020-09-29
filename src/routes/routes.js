@@ -9,5 +9,9 @@ app.use(require('./users'));
 app.use(require('./categories'));
 // Products routes
 app.use(require('./products'));
+// Uploads routes
+app.use(require('./uploads'));
+// Uploads routes
+app.use(require('./images'));
 
 module.exports = app;
